@@ -27,13 +27,13 @@ def base_roll_probability(dice, num_dice):
         probability_map[roll] /= total_rolls
 
     return probability_map
+
 def handle_community_chest(end_idx: int, prob: float, matrix: np.ndarray, start_idx: int):
     # 2 cards move you (Go, Jail), rest don’t
     move_cards = ["Go", "Jail"]
     for dest in move_cards:
         matrix[start_idx][NAME_TO_INDEX[dest]] += (1/16) * prob
     matrix[start_idx][end_idx] += (14/16) * prob
-
 
 def handle_chance(end_idx: int, prob: float, matrix: np.ndarray, board_list: List[str], start_idx: int):
     # Direct-move cards
@@ -99,8 +99,6 @@ def transition_matrix(base_probabilities: Dict[int, float], board_list: list[str
             matrix[i] /= row_sum
 
     return matrix
-
-
 
 def roll_dice(dice_sides, num_dice):
     """
