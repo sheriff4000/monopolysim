@@ -75,7 +75,7 @@ def transition_matrix(base_probabilities: Dict[int, float], board_list: list[str
     """
     n = len(board_list)
     matrix = np.zeros((n, n))
-
+    #TODO expand this to consider double rolls
     for start_idx in range(n):
         for roll_sum, prob in base_probabilities.items():
             end_idx = (start_idx + roll_sum) % n
