@@ -5,6 +5,24 @@ from typing import Dict, List
 
 dice = [1, 2, 3, 4, 5, 6]
 num_dice = 2
+
+chance_destination_probabilities = {
+    "Go": 1/16,
+    "Mayfair": 1/16,
+    "Jail": 1/16,
+    "Trafalgar Square": 1/16,
+    "Pall Mall": 1/16,
+    "King's Cross Station": 1/16,
+    "Nearest Station": 2/16,
+    "Back 3 Spaces": 1/16,
+    "Stay": 7/16
+}
+community_chest_destination_probabilities = {
+    "Go": 1/16,
+    "Jail": 1/16,
+    "Stay": 14/16
+}
+
 def base_roll_probability(dice, num_dice):
     """
     Calculate the probability of rolling a sum with a given number of dice.

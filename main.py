@@ -1,5 +1,7 @@
 from board import BOARD_LIST, NAME_TO_INDEX
 from probabilities import base_roll_probability, transition_matrix
+from results import plot_monopoly_heatmap
+from simulation import simulate_moves, log_probabilities
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -49,35 +51,6 @@ def steady_state_distribution(transitions):
     
     return steady_state
 
-
-def plot_monopoly_heatmap(steady_state, board_list):
-    """
-    Plot a heatmap of the steady state distribution on the Monopoly board.
-    """
-    n = len(steady_state)
-    
-    # Try to reshape into something roughly square
-    width = 8
-    height = 5  # Because 8x5 = 40 squares
-
-    data = steady_state.reshape((height, width))
-    
-    plt.figure(figsize=(12, 6))
-    plt.imshow(data, cmap='plasma', interpolation='nearest')
-    plt.colorbar(label='Probability')
-    
-    # Add text labels
-    for i in range(height):
-        for j in range(width):
-            idx = i * width + j
-            label = board_list[idx][:6]  # Shorten names to fit
-            plt.text(j, i, f"{label}\n{steady_state[idx]:.3f}",
-                     ha='center', va='center', color='white', fontsize=8)
-    
-    plt.title('Monopoly Steady State Distribution Heatmap')
-    plt.axis('off')
-    plt.show()
-
 steady_state = steady_state_distribution(transitions)
 print(steady_state.shape)  # Should be (1, 40)
 print(steady_state[:])  # Should be a 1D array of probabilities
@@ -88,4 +61,10 @@ sorted_indices = np.argsort(-steady_state[:])  # descending order
 for i in sorted_indices:
     print(f"{BOARD_LIST[i]}: {steady_state[i]:.4f}")
     
-plot_monopoly_heatmap(steady_state, BOARD_LIST)
+# plot_monopoly_heatmap(steady_state, BOARD_LIST)
+
+print("SIMULATION")
+num_iterations = 3000
+iteration_size = 1000
+start_position = 0
+simulated_probabilities = log_probabilities(num_iterations, iteration_size, start_position)
